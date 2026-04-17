@@ -118,7 +118,7 @@ La plateforme charge des sujets au format JSON structuré. Exemple de structure 
 
 ```
 nsi_jedi_academy.html   ← Application complète (HTML + CSS + JS, fichier unique)
-sujet_*.json            ← Fichiers de sujets (un par évaluation)
+*.json            ← Fichiers de sujets (un par évaluation)
 ```
 
 **Stack :**
