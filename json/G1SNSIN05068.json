@@ -1,0 +1,786 @@
+{
+  "meta": {
+    "id": "G1SNSIN05068",
+    "titre": "Évaluation Commune — Spécialité NSI",
+    "classe": "Première",
+    "voie": "Générale",
+    "duree_minutes": 120,
+    "calculatrice": false,
+    "dictionnaire": false,
+    "nb_questions": 42,
+    "nb_themes": 7,
+    "bareme": {
+      "bonne_reponse": 3,
+      "mauvaise_reponse": -1,
+      "sans_reponse": 0,
+      "note_theme_min": 0,
+      "diviseur_final": 6.3,
+      "arrondi": "superieur"
+    }
+  },
+  "themes": [
+    {
+      "id": "A",
+      "titre": "Types de base",
+      "description": "RGB, binaire, encodage UTF-8, complément à 2, algèbre booléenne, hexadécimal.",
+      "questions": [
+        {
+          "id": "A1",
+          "difficulte": 2,
+          "enonce": "La couleur « bleu roi » a pour code RGB (65, 105, 225). Sa représentation hexadécimale est :",
+          "code": "r, g, b = 65, 105, 225\nprint(f'R={r} → {r:02X}')\nprint(f'G={g} → {g:02X}')\nprint(f'B={b} → {b:02X}')\nprint(f'Code CSS : #{r:02X}{g:02X}{b:02X}')",
+          "type_code": "python",
+          "propositions": {
+            "A": "#2852C2",
+            "B": "#4169E1",
+            "C": "#33A5C61",
+            "D": "#C3T622"
+          },
+          "reponse": "B",
+          "explication": "On convertit chaque composante RGB en hexadécimal sur 2 chiffres :\n• Rouge : 65 = 4×16 + 1 = **41**\n• Vert  : 105 = 6×16 + 9 = **69**\n• Bleu  : 225 = 14×16 + 1 = **E1**\n→ Code : **#4169E1** ✓\n\nPièges : C a 7 chiffres (invalide), D contient T (pas un chiffre hexadécimal), A correspond à RGB(40,82,194).",
+          "notion_cle": "Conversion RGB → hexadécimal",
+          "astuce": "Divisez chaque composante par 16 : quotient = premier chiffre hex, reste = second. 65÷16 = 4 reste 1 → 41."
+        },
+        {
+          "id": "A2",
+          "difficulte": 2,
+          "enonce": "En ajoutant trois chiffres 0 à droite de l'écriture binaire d'un entier N strictement positif, on obtient l'écriture binaire de :",
+          "code": "N = 5  # exemple : 101 en binaire\nprint(f'N = {N} = {bin(N)}')\nprint(f'N×8 = {N*8} = {bin(N*8)}')\nprint(f'Ajouter 3 zéros à droite : {bin(N)[2:]}000 = {int(bin(N)[2:]+\"000\", 2)}')",
+          "type_code": "python",
+          "propositions": {
+            "A": "6 × N",
+            "B": "8 × N",
+            "C": "1000 × N",
+            "D": "Aucune des réponses précédentes"
+          },
+          "reponse": "B",
+          "explication": "En binaire, décaler les bits vers la gauche de k positions revient à **multiplier par 2^k**.\nAjouter 3 zéros = décalage de 3 positions = multiplication par **2³ = 8**.\n\nExemple : N = 5 = `101₂`\nN avec 3 zéros = `101 000₂` = 40 = 5 × **8** ✓\n\nPiège C : 1000 × N ne tient pas : en binaire, `1000₂` = 8, pas 1000.",
+          "notion_cle": "Décalage binaire — multiplication par puissance de 2",
+          "astuce": "Ajouter k zéros à droite en binaire = multiplier par 2^k. 3 zéros → ×2³ = ×8. En décimal, ajouter 3 zéros = ×1000. En binaire, ×8 (pas ×1000)."
+        },
+        {
+          "id": "A3",
+          "difficulte": 2,
+          "enonce": "Olivier visite un site et voit des caractères corrompus du type `Lâ€™enseignement de spÃ©cialitÃ©`. Le texte original contient des accents français. Quel encodage doit-il sélectionner dans son navigateur pour afficher correctement le texte ?",
+          "code": null,
+          "type_code": null,
+          "propositions": {
+            "A": "ANSI",
+            "B": "LATIN-1",
+            "C": "ASCII",
+            "D": "UTF-8"
+          },
+          "reponse": "D",
+          "explication": "La corruption `Ã©` à la place de `é` et `â€™` à la place de `'` est la **signature typique d'un fichier UTF-8 lu en Latin-1** (ISO-8859-1).\n\nChaque caractère UTF-8 multi-octet est interprété comme deux ou trois caractères Latin-1 distincts, produisant ces séquences caractéristiques.\n\n**Solution** : indiquer au navigateur que le fichier est encodé en **UTF-8** ✓\n\nPièges :\n• ASCII ne contient que 128 caractères (pas les accents)\n• LATIN-1 est justement l'encodage incorrect utilisé par défaut ici\n• ANSI est un alias de Windows-1252, encodage proche mais différent d'UTF-8",
+          "notion_cle": "Problème d'encodage UTF-8 vs Latin-1",
+          "astuce": "Ã© = é en UTF-8 mal lu en Latin-1. Signature : accents remplacés par 2-3 caractères bizards. Correction = choisir UTF-8 dans le navigateur."
+        },
+        {
+          "id": "A4",
+          "difficulte": 2,
+          "enonce": "Quelle est la représentation en binaire signé en **complément à 2** de l'entier **−1** sur un octet ?",
+          "code": "# Vérification en Python\nn = -1\nprint('−1 en binaire (8 bits) :')\nprint(bin(n & 0xFF))  # masque 8 bits\nprint(format(n & 0xFF, '08b'))",
+          "type_code": "python",
+          "propositions": {
+            "A": "`1000 0000`",
+            "B": "`1000 0001`",
+            "C": "`1111 1110`",
+            "D": "`1111 1111`"
+          },
+          "reponse": "D",
+          "explication": "En **complément à 2** sur 8 bits :\n**Méthode** : inverser tous les bits de la valeur absolue (1 → `0000 0001`) puis ajouter 1.\n1. `0000 0001` → inverser → `1111 1110`\n2. `1111 1110` + 1 = **`1111 1111`** ✓\n\nVérification : `1111 1111` + `0000 0001` = `1 0000 0000` → le bit de débordement est ignoré, reste `0000 0000` = 0. Donc `1111 1111` représente bien −1.\n\nPièges :\n• A (`1000 0000`) = −128\n• C (`1111 1110`) = −2",
+          "notion_cle": "Complément à 2 — représentation de −1",
+          "astuce": "−1 en complément à 2 = tous les bits à 1. C'est la valeur dont l'addition avec +1 donne 0 (avec débordement ignoré). 1111 1111 + 1 = 0 sur 8 bits."
+        },
+        {
+          "id": "A5",
+          "difficulte": 3,
+          "enonce": "On considère l'expression logique `(a or b) and a`. Quelle est sa table de vérité ?",
+          "code": "for a in [False, True]:\n    for b in [False, True]:\n        result = (a or b) and a\n        print(f'a={a}, b={b} → {result}')",
+          "type_code": "python",
+          "propositions": {
+            "A": "F,F→F ; F,T→T ; T,F→T ; T,T→T",
+            "B": "F,F→F ; F,T→F ; T,F→T ; T,T→T",
+            "C": "F,F→F ; F,T→F ; T,F→F ; T,T→T",
+            "D": "F,F→F ; F,T→F ; T,F→F ; T,T→F"
+          },
+          "reponse": "B",
+          "explication": "Évaluation de `(a or b) and a` :\n- (F, F) : (F or F) and F = F and F = **F**\n- (F, T) : (F or T) and F = T and F = **F**\n- (T, F) : (T or F) and T = T and T = **T**\n- (T, T) : (T or T) and T = T and T = **T**\n\nRemarque : `(a or b) and a` est en fait **équivalent à `a`** ! Car si a=False, l'expression vaut toujours False. Si a=True, `(True or b)=True` donc `True and True=True`.\n\nPiège A : la ligne (F,T) est à True dans A, ce qui est incorrect.",
+          "notion_cle": "Table de vérité — algèbre booléenne",
+          "astuce": "(a or b) and a ≡ a. Astuce de simplification : si a=False, tout and a vaut False. Donc les lignes avec a=False sont toutes False."
+        },
+        {
+          "id": "A6",
+          "difficulte": 2,
+          "enonce": "Comment s'écrit en hexadécimal le nombre dont l'écriture binaire est `0010 1100` ?",
+          "code": "n = 0b00101100\nprint('Décimal :', n)\nprint('Hex     :', hex(n).upper())\nprint('0010 =', 0b0010, '= 2 ;  1100 =', 0b1100, '= 12 = C')",
+          "type_code": "python",
+          "propositions": {
+            "A": "1D",
+            "B": "2C",
+            "C": "3C",
+            "D": "3E"
+          },
+          "reponse": "B",
+          "explication": "Méthode par **quartets** (groupes de 4 bits) :\n`0010 1100`\n→ Quartet gauche : `0010` = 2 = **2**\n→ Quartet droit  : `1100` = 12 = **C**\n→ Résultat : **2C** ✓ (= 44 en décimal)\n\nPièges :\n• 1D = `0001 1101` (17+13=29 ≠ 44)\n• 3C = `0011 1100` (48 ≠ 44)\n• 3E = `0011 1110` (62 ≠ 44)",
+          "notion_cle": "Conversion binaire → hexadécimal par quartets",
+          "astuce": "Groupez par 4 bits depuis la droite. Chaque groupe de 4 bits donne 1 chiffre hex : 0000=0 … 1001=9, 1010=A … 1111=F."
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "titre": "Types construits",
+      "description": "Dictionnaires, listes, tableaux 2D, compréhensions, rotation de liste.",
+      "questions": [
+        {
+          "id": "B1",
+          "difficulte": 2,
+          "enonce": "On exécute :\n```python\ninventaire = {'pommes':430,'bananes':312,'oranges':274,'poires':137}\nstock = 0\nfor fruit in inventaire.keys():\n    if fruit != 'bananes':\n        stock = stock + inventaire[fruit]\n```\nQue contient `stock` à la fin ?",
+          "code": "inventaire = {'pommes':430,'bananes':312,'oranges':274,'poires':137}\nstock = 0\nfor fruit in inventaire.keys():\n    if fruit != 'bananes':\n        stock = stock + inventaire[fruit]\nprint('stock =', stock)\nprint('Vérification :', 430+274+137)",
+          "type_code": "python",
+          "propositions": {
+            "A": "`{430, 274, 137}`",
+            "B": "312",
+            "C": "841",
+            "D": "`{ 'pommes', 'oranges', 'poires' }`"
+          },
+          "reponse": "C",
+          "explication": "La boucle parcourt toutes les clés et additionne les valeurs sauf pour 'bananes' :\n430 (pommes) + 274 (oranges) + 137 (poires) = **841** ✓\n\nPièges :\n• A et D sont des ensembles, pas un entier\n• B (312) est la valeur de 'bananes' — précisément ce qu'on **exclut**",
+          "notion_cle": "Parcours d'un dictionnaire avec filtre",
+          "astuce": "inventaire.keys() itère sur les clés. La condition exclut 'bananes'. On accumule les autres valeurs : 430+274+137=841."
+        },
+        {
+          "id": "B2",
+          "difficulte": 2,
+          "enonce": "On exécute :\n```python\ndef f(L):\n    temp = L[0]\n    for i in range(len(L)-1):\n        L[i] = L[i+1]\n    L[-1] = temp\nL = [1, 2, 3, 4, 5]\nf(L)\n```\nQuelle est la valeur de `L` à la fin ?",
+          "code": "def f(L):\n    temp = L[0]\n    for i in range(len(L)-1):\n        L[i] = L[i+1]\n    L[-1] = temp\nL = [1, 2, 3, 4, 5]\nf(L)\nprint(L)",
+          "type_code": "python",
+          "propositions": {
+            "A": "[2, 3, 4, 5, 1]",
+            "B": "[5, 1, 2, 3, 4]",
+            "C": "[5, 4, 3, 2, 1]",
+            "D": "[3, 4, 5, 1, 2]"
+          },
+          "reponse": "A",
+          "explication": "La fonction effectue une **rotation gauche** : le premier élément passe en dernière position, les autres se décalent vers la gauche.\n\n1. `temp = L[0]` = 1\n2. Boucle : L[0]=L[1]=2, L[1]=L[2]=3, L[2]=L[3]=4, L[3]=L[4]=5\n3. `L[-1] = temp` = 1\n→ L = **[2, 3, 4, 5, 1]** ✓\n\nPiège B : serait une rotation droite. C : inversion. D : rotation de 2 positions.",
+          "notion_cle": "Rotation de liste — manipulation d'indices",
+          "astuce": "La boucle range(len(L)-1) = range(4) décale chaque élément d'une position vers la gauche. L[-1] = dernier élément. Résultat = rotation gauche."
+        },
+        {
+          "id": "B3",
+          "difficulte": 1,
+          "enonce": "On définit `matrice = [[1,2,3],[4,5,6],[7,8,9],[10,11,12]]`. Quelle est la valeur de `matrice[1][2]` ?",
+          "code": "matrice = [[1,2,3],[4,5,6],[7,8,9],[10,11,12]]\nprint('matrice[1]    =', matrice[1])\nprint('matrice[1][2] =', matrice[1][2])",
+          "type_code": "python",
+          "propositions": {
+            "A": "2",
+            "B": "4",
+            "C": "8",
+            "D": "6"
+          },
+          "reponse": "D",
+          "explication": "`matrice[1]` = deuxième ligne (index 1) = [4, 5, 6]\n`matrice[1][2]` = troisième élément (index 2) de cette ligne = **6** ✓\n\nStructure :\n```\nmatrice[0] = [1,  2,  3 ]\nmatrice[1] = [4,  5,  6 ]  ← ligne 1\nmatrice[2] = [7,  8,  9 ]\nmatrice[3] = [10, 11, 12]\n         idx: 0   1   2  ← colonne 2 → 6\n```",
+          "notion_cle": "Indexation tableau 2D — convention [ligne][colonne]",
+          "astuce": "matrice[ligne][colonne], indices depuis 0. Ligne 1 = [4,5,6]. Colonne 2 de cette ligne = 6."
+        },
+        {
+          "id": "B4",
+          "difficulte": 2,
+          "enonce": "Quelle est la valeur de l'expression `[[n, n+2] for n in range(3)]` ?",
+          "code": "result = [[n, n+2] for n in range(3)]\nprint(result)\nfor n in range(3):\n    print(f'  n={n} → [{n}, {n+2}]')",
+          "type_code": "python",
+          "propositions": {
+            "A": "`[0,2,1,3,2,4]`",
+            "B": "`[1,3,2,4,3,5]`",
+            "C": "`[1,3],[2,4],[3,5]`",
+            "D": "`[[0,2],[1,3],[2,4]]`"
+          },
+          "reponse": "D",
+          "explication": "Pour `n` dans `range(3)` = {0, 1, 2} :\n- n=0 : [0, 2]\n- n=1 : [1, 3]\n- n=2 : [2, 4]\n\n→ **[[0,2],[1,3],[2,4]]** ✓ — c'est une **liste de listes**\n\nPièges :\n• A et B sont des listes plates (pas de sous-listes), et A commence par 0 pas 1\n• C est la version sans les crochets externes (notation incorrecte)",
+          "notion_cle": "Compréhension de liste de listes",
+          "astuce": "[[expr] for ...] crée une liste DE LISTES. Ici [n, n+2] est une sous-liste à 2 éléments. range(3) = 0,1,2 → 3 sous-listes."
+        },
+        {
+          "id": "B5",
+          "difficulte": 1,
+          "enonce": "On définit `M = [['A','B','C','D'],['E','F','G','H'],['I','J','K','L']]`. Que vaut `M[2][1]` ?",
+          "code": "M = [['A','B','C','D'],['E','F','G','H'],['I','J','K','L']]\nprint('M[2]    =', M[2])\nprint('M[2][1] =', M[2][1])",
+          "type_code": "python",
+          "propositions": {
+            "A": "'G'",
+            "B": "'J'",
+            "C": "'E'",
+            "D": "'B'"
+          },
+          "reponse": "B",
+          "explication": "`M[2]` = troisième ligne (index 2) = `['I','J','K','L']`\n`M[2][1]` = deuxième élément (index 1) = **'J'** ✓\n\nStructure :\n```\nM[0] = ['A','B','C','D']\nM[1] = ['E','F','G','H']\nM[2] = ['I','J','K','L']  ← ligne 2\n         0    1    2   3  ← index 1 → 'J'\n```\n\nPièges :\n• G = M[1][2] (ligne 1, colonne 2)\n• E = M[1][0]\n• B = M[0][1]",
+          "notion_cle": "Tableau 2D de caractères — indexation",
+          "astuce": "M[2][1] : ligne 2 = ['I','J','K','L'], élément 1 = 'J'. Comptez toujours depuis 0."
+        },
+        {
+          "id": "B6",
+          "difficulte": 1,
+          "enonce": "Le **premier élément** d'une liste Python `L` est noté :",
+          "code": "L = [10, 20, 30, 40]\nprint('Premier élément :', L[0])\n# L(0) → TypeError: 'list' object is not callable",
+          "type_code": "python",
+          "propositions": {
+            "A": "`L(0)`",
+            "B": "`L(1)`",
+            "C": "`L[0]`",
+            "D": "`L[1]`"
+          },
+          "reponse": "C",
+          "explication": "En Python, l'accès aux éléments d'une liste se fait avec des **crochets** `[]` et les **indices commencent à 0**.\n\n`L[0]` = premier élément ✓\n`L[1]` = deuxième élément\n\nPièges :\n• `L(0)` et `L(1)` utilisent des parenthèses → `TypeError: 'list' object is not callable` (Python penserait que L est une fonction)\n• `L[1]` est le **deuxième** élément, pas le premier",
+          "notion_cle": "Indexation de liste — index 0 et crochets",
+          "astuce": "Les listes utilisent [] (pas ()). Les indices démarrent à 0. L[0] = premier, L[1] = deuxième, L[-1] = dernier."
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "titre": "Traitement de données en tables",
+      "description": "CSV, tableaux 2D, listes de dictionnaires, descripteurs.",
+      "questions": [
+        {
+          "id": "C1",
+          "difficulte": 1,
+          "enonce": "Qu'est-ce que le CSV ?",
+          "code": null,
+          "type_code": null,
+          "propositions": {
+            "A": "Un langage de programmation",
+            "B": "Un format de fichier permettant de stocker de l'information",
+            "C": "Un algorithme permettant de rechercher une information dans un fichier",
+            "D": "Un format de fichier permettant de définir le style d'une page web"
+          },
+          "reponse": "B",
+          "explication": "**CSV** (Comma-Separated Values) est un **format de fichier texte** permettant de stocker des données tabulaires — chaque ligne est un enregistrement, les champs sont séparés par des virgules (ou point-virgules).\n\nPièges :\n• A : CSV n'est pas un langage de programmation (ce serait Python, Java, C…)\n• C : la recherche dans un fichier est un algorithme, pas un format\n• D : la mise en forme d'une page web relève du CSS (pas CSV)",
+          "notion_cle": "Format CSV — définition",
+          "astuce": "CSV = Comma-Separated Values = données séparées par des virgules = fichier texte tabulaire. Ne pas confondre avec CSS (style web)."
+        },
+        {
+          "id": "C2",
+          "difficulte": 1,
+          "enonce": "Soit `tableau = [[1,3,4],[2,7,8],[9,10,6],[12,11,5]]`. On souhaite accéder à la valeur **12**. On écrit :",
+          "code": "tableau = [[1,3,4],[2,7,8],[9,10,6],[12,11,5]]\nprint('tableau[3][0] =', tableau[3][0])\nprint('Structure :')\nfor i,row in enumerate(tableau):\n    print(f'  tableau[{i}] = {row}')",
+          "type_code": "python",
+          "propositions": {
+            "A": "`tableau[4][1]`",
+            "B": "`tableau[1][4]`",
+            "C": "`tableau[0][3]`",
+            "D": "`tableau[3][0]`"
+          },
+          "reponse": "D",
+          "explication": "Le tableau a 4 lignes (indices 0 à 3) :\n- tableau[0] = [1, 3, 4]\n- tableau[1] = [2, 7, 8]\n- tableau[2] = [9, 10, 6]\n- **tableau[3]** = [12, 11, 5] → 12 est à l'**index 0**\n\n→ `tableau[3][0]` = **12** ✓\n\nPièges :\n• A et B : indices 4 ou [4] hors limites → IndexError\n• C : tableau[0][3] hors bornes (ligne 0 n'a que 3 éléments, indices 0-2)",
+          "notion_cle": "Accès dans un tableau 2D",
+          "astuce": "Comptez les lignes depuis 0 pour trouver la ligne, puis la position de la valeur dans cette ligne. 12 est en ligne 3 (4e ligne), colonne 0 (1re colonne)."
+        },
+        {
+          "id": "C3",
+          "difficulte": 1,
+          "enonce": "Quelle expression Python permet d'accéder au numéro de téléphone de Tournesol ?\n```python\nrepertoire = [{'nom':'Dupont','tel':'5234'},\n              {'nom':'Tournesol','tel':'5248'},\n              {'nom':'Dupond','tel':'3452'}]\n```",
+          "code": "repertoire = [{'nom':'Dupont','tel':'5234'},\n              {'nom':'Tournesol','tel':'5248'},\n              {'nom':'Dupond','tel':'3452'}]\nprint('repertoire[1]       =', repertoire[1])\nprint(\"repertoire[1]['tel'] =\", repertoire[1]['tel'])",
+          "type_code": "python",
+          "propositions": {
+            "A": "`repertoire['Tournesol']`",
+            "B": "`repertoire['tel'][1]`",
+            "C": "`repertoire[1]['tel']`",
+            "D": "`repertoire['Tournesol'][tel]`"
+          },
+          "reponse": "C",
+          "explication": "`repertoire` est une **liste** de dictionnaires :\n1. `repertoire[1]` → le dictionnaire de Tournesol = `{'nom':'Tournesol','tel':'5248'}`\n2. `repertoire[1]['tel']` → la valeur de la clé 'tel' = **'5248'** ✓\n\nPièges :\n• A : une liste ne s'indexe pas par une chaîne → `TypeError`\n• B : `repertoire['tel']` idem → `TypeError`\n• D : `tel` sans quotes → `NameError` (variable non définie)",
+          "notion_cle": "Accès dans une liste de dictionnaires",
+          "astuce": "liste[indice_entier]['cle_string']. D'abord l'indice numérique pour la liste (Tournesol est en index 1), puis la clé string pour le dictionnaire."
+        },
+        {
+          "id": "C4",
+          "difficulte": 1,
+          "enonce": "On définit :\n```python\ncontacts = {'Toto':'toto@nsi.fr', 'Chloé':'chloe@nsi.com',\n            'Paul':'paul@nsi.net', 'Clémence':'clemence@nsi.org'}\n```\nParmi les propositions, laquelle est exacte ?",
+          "code": "contacts = {'Toto':'toto@nsi.fr','Chloe':'chloe@nsi.com'}\nprint('Clés    :', list(contacts.keys()))\nprint('Valeurs :', list(contacts.values()))\nprint('\"Chloe\" est une :', 'clé' if 'Chloe' in contacts.keys() else 'valeur')",
+          "type_code": "python",
+          "propositions": {
+            "A": "'Chloé' est une **valeur** de la variable `contacts`",
+            "B": "'Chloé' est une **clé** de la variable `contacts`",
+            "C": "'Chloé' est un **attribut** de la variable `contacts`",
+            "D": "'Chloé' est un **champ** de la variable `contacts`"
+          },
+          "reponse": "B",
+          "explication": "Dans un dictionnaire Python `{'clé': 'valeur', ...}` :\n- Les **clés** sont les identifiants à gauche : 'Toto', 'Chloé', 'Paul', 'Clémence'\n- Les **valeurs** sont à droite : 'toto@nsi.fr', 'chloe@nsi.com'…\n\n'Chloé' est à **gauche** → c'est une **clé** ✓\n\nPièges :\n• Valeur serait 'chloe@nsi.com'\n• Attribut et champ ne sont pas les termes Python pour les éléments d'un dictionnaire",
+          "notion_cle": "Dictionnaire Python — clés et valeurs",
+          "astuce": "{'clé': 'valeur'}. Ce qui est à gauche des : est la clé. Ce qui est à droite est la valeur."
+        },
+        {
+          "id": "C5",
+          "difficulte": 1,
+          "enonce": "On définit :\n```python\nT = [{'fruit':'banane','nombre':25}, {'fruit':'orange','nombre':124},\n     {'fruit':'pomme','nombre':75}, {'fruit':'kiwi','nombre':51}]\n```\nQuelle expression a pour valeur le nombre de pommes ?",
+          "code": "T = [{'fruit':'banane','nombre':25},{'fruit':'orange','nombre':124},\n     {'fruit':'pomme','nombre':75},{'fruit':'kiwi','nombre':51}]\nprint('T[2] =', T[2])\nprint(\"T[2]['nombre'] =\", T[2]['nombre'])",
+          "type_code": "python",
+          "propositions": {
+            "A": "`T[2]['nombre']`",
+            "B": "`T[2,'nombre']`",
+            "C": "`T[3]['nombre']`",
+            "D": "`T[3,'nombre']`"
+          },
+          "reponse": "A",
+          "explication": "T est une liste de 4 dictionnaires (indices 0 à 3) :\n- T[0] = banane, T[1] = orange, **T[2] = pomme**, T[3] = kiwi\n\n`T[2]['nombre']` = 75 ✓\n\nPièges :\n• B et D : `T[2,'nombre']` → TypeError (syntaxe invalide pour une liste)\n• C : `T[3]` = kiwi (nombre = 51), pas pomme",
+          "notion_cle": "Accès dans une liste de dictionnaires",
+          "astuce": "Comptez les indices depuis 0 : banane=0, orange=1, pomme=2, kiwi=3. Puis ['cle'] pour accéder à la valeur."
+        },
+        {
+          "id": "C6",
+          "difficulte": 1,
+          "enonce": "Laquelle de ces affirmations sur le format CSV est vraie ?",
+          "code": null,
+          "type_code": null,
+          "propositions": {
+            "A": "On peut ouvrir un fichier CSV à l'aide d'un tableur",
+            "B": "Un fichier CSV permet de gérer l'apparence du code dans l'éditeur",
+            "C": "Un fichier CSV permet de gérer l'apparence d'une page HTML",
+            "D": "Un fichier CSV contient un programme à compiler"
+          },
+          "reponse": "A",
+          "explication": "Un fichier **CSV est un fichier texte** contenant des données tabulaires séparées par des virgules. Il peut être ouvert et édité par :\n- Un **tableur** (Excel, LibreOffice Calc) ✓ — qui reconnaît la structure tabulaire\n- Un éditeur de texte (Notepad, VS Code)\n- Un programme Python (module `csv`, `pandas`)\n\nPièges :\n• B : l'apparence du code dans un éditeur = colorisation syntaxique (pas CSV)\n• C : l'apparence d'une page HTML = **CSS** (Cascading Style Sheets) — ne pas confondre CSV et CSS\n• D : un programme compilable serait du C, Java… — pas du CSV",
+          "notion_cle": "Usages du format CSV",
+          "astuce": "CSV ≠ CSS. CSV = données tabulaires (tableur, Python). CSS = style d'une page web. Un fichier CSV s'ouvre avec un tableur ou un éditeur texte."
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "titre": "Interactions entre l'homme et la machine sur le Web",
+      "description": "HTML, JavaScript, HTTP, PHP, formulaires, protocoles.",
+      "questions": [
+        {
+          "id": "D1",
+          "difficulte": 1,
+          "enonce": "Dans une page web, on souhaite créer un bouton qui appelle la fonction JavaScript `traitement()`. Quelle ligne est correcte ?",
+          "code": null,
+          "type_code": null,
+          "propositions": {
+            "A": "`<button onclick=\"traitement()\">Cliquez ici</button>`",
+            "B": "`<a href=traitement()>Cliquez ici</a>`",
+            "C": "`<button>Cliquez ici</button=traitement()>`",
+            "D": "`<button>Cliquez ici=traitement()</button>`"
+          },
+          "reponse": "A",
+          "explication": "Pour appeler une fonction JavaScript lors d'un clic, on utilise l'attribut `onclick` dans une balise `<button>` :\n`<button onclick=\"traitement()\">Cliquez ici</button>` ✓\n\nPièges :\n• B : `<a href>` crée un lien, pas un bouton — et `href` attend une URL, pas un appel de fonction\n• C : `</button=...>` est du HTML invalide — les attributs se mettent dans la balise ouvrante, pas fermante\n• D : le texte du bouton et le JavaScript sont mélangés",
+          "notion_cle": "Gestionnaire d'événement onclick en HTML/JavaScript",
+          "astuce": "onclick est un attribut HTML qui déclenche du JavaScript au clic. Il se met dans la balise ouvrante : <button onclick=\"fonc()\">texte</button>."
+        },
+        {
+          "id": "D2",
+          "difficulte": 2,
+          "enonce": "Parmi les langages suivants, lequel est **exécuté sur le serveur** lors de la consultation d'une page Web ?",
+          "code": null,
+          "type_code": null,
+          "propositions": {
+            "A": "JavaScript",
+            "B": "HTML",
+            "C": "CSS",
+            "D": "PHP"
+          },
+          "reponse": "D",
+          "explication": "**PHP** est un langage de programmation **côté serveur** : il s'exécute sur le serveur web et génère du HTML dynamique avant d'envoyer la page au client.\n\nLangages côté **client** (exécutés dans le navigateur) :\n• **JavaScript** : interactions dynamiques dans la page\n• **HTML** : structure du document\n• **CSS** : mise en forme\n\nLangages côté **serveur** (exemples) : PHP, Python (Flask/Django), Node.js, Ruby, Java…",
+          "notion_cle": "Client vs serveur — exécution des langages Web",
+          "astuce": "HTML/CSS/JavaScript = côté client (navigateur). PHP/Python/Ruby = côté serveur. PHP est LE langage serveur classique des questions NSI."
+        },
+        {
+          "id": "D3",
+          "difficulte": 1,
+          "enonce": "Dans un formulaire HTML, par quoi remplacer les pointillés pour que les données n'apparaissent **pas dans l'URL** ?\n```html\n<form method=\".........\" action=\"traitement.html\">\n```",
+          "code": null,
+          "type_code": null,
+          "propositions": {
+            "A": "GET",
+            "B": "POST",
+            "C": "SECRET",
+            "D": "HIDDEN"
+          },
+          "reponse": "B",
+          "explication": "**POST** place les données dans le **corps** de la requête HTTP → elles n'apparaissent pas dans l'URL.\n\n**GET** place les données dans l'URL : `traitement.html?nom=Martin&mdp=1234` → visibles dans l'historique, les logs, etc.\n\nPièges :\n• SECRET et HIDDEN ne sont pas des méthodes HTTP\n• HIDDEN est un type de champ `<input type=\"hidden\">`, pas une méthode",
+          "notion_cle": "Méthode POST — données cachées de l'URL",
+          "astuce": "GET = données dans l'URL (visibles). POST = données dans le corps (cachées de l'URL). Pour un mot de passe → toujours POST."
+        },
+        {
+          "id": "D4",
+          "difficulte": 1,
+          "enonce": "Parmi les réponses suivantes, que permet d'effectuer la méthode POST du protocole HTTP ?",
+          "code": null,
+          "type_code": null,
+          "propositions": {
+            "A": "Définir le style d'une page web",
+            "B": "Pirater des données bancaires",
+            "C": "Envoyer une page web vers le client",
+            "D": "Envoyer les données saisies dans un formulaire HTML vers un serveur"
+          },
+          "reponse": "D",
+          "explication": "La méthode **POST** du protocole HTTP permet d'**envoyer des données** (saisies dans un formulaire, fichiers, etc.) **du client vers le serveur**.\n\nC'est l'usage principal de POST : soumettre un formulaire de connexion, envoyer un commentaire, uploader un fichier…\n\nPièges :\n• A : le style = CSS, pas une méthode HTTP\n• B : POST n'est pas un outil de piratage\n• C : envoyer une page vers le client = réponse GET du serveur",
+          "notion_cle": "Méthode POST — envoi de données formulaire",
+          "astuce": "POST = le client envoie des données AU serveur. GET = le client demande des données DU serveur."
+        },
+        {
+          "id": "D5",
+          "difficulte": 1,
+          "enonce": "Un élève place sa fonction JavaScript dans sa page HTML. Où doit-il la placer ?",
+          "code": null,
+          "type_code": null,
+          "propositions": {
+            "A": "Entre `<js>` et `</js>`",
+            "B": "Entre `<code>` et `</code>`",
+            "C": "Entre `<script>` et `</script>`",
+            "D": "Entre `<javascript>` et `</javascript>`"
+          },
+          "reponse": "C",
+          "explication": "En HTML, le code JavaScript s'insère dans une balise **`<script>`** :\n```html\n<script>\n    function maFonction() { ... }\n</script>\n```\n\nPièges :\n• `<js>` et `<javascript>` n'existent pas en HTML\n• `<code>` est une balise de présentation (affiche du code formaté) mais ne l'exécute pas",
+          "notion_cle": "Balise `<script>` pour JavaScript en HTML",
+          "astuce": "<script> = code JavaScript exécutable. <code> = affichage de code (cosmétique seulement). Mémo : script → exécuter."
+        },
+        {
+          "id": "D6",
+          "difficulte": 1,
+          "enonce": "Quel est le protocole utilisé pour accéder à la page :\n`https://www.domaine.gouv.fr/qcm.php?nom=Martin` ?",
+          "code": null,
+          "type_code": null,
+          "propositions": {
+            "A": "HTTPS",
+            "B": "HTTP",
+            "C": "WWW",
+            "D": "FTP"
+          },
+          "reponse": "A",
+          "explication": "L'URL commence par **`https://`** → le protocole est **HTTPS** (HTTP Secure) ✓\n\nDécomposition de l'URL :\n```\nhttps://   www.domaine.gouv.fr   /qcm.php    ?nom=Martin\n  ↑               ↑                 ↑              ↑\nprotocole      serveur           chemin        paramètre\n```\n\nPièges :\n• HTTP serait si l'URL commençait par `http://` (sans S)\n• WWW est une partie du nom de domaine, pas un protocole\n• FTP est un protocole de transfert de fichiers (pas pour les pages web)",
+          "notion_cle": "Identification du protocole dans une URL",
+          "astuce": "Le protocole est toujours au début de l'URL, avant ://. https:// → HTTPS. http:// → HTTP. ftp:// → FTP."
+        }
+      ]
+    },
+    {
+      "id": "E",
+      "titre": "Architectures matérielles et systèmes d'exploitation",
+      "description": "Architecture de Von Neumann, commandes Linux, stockage, DNS.",
+      "questions": [
+        {
+          "id": "E1",
+          "difficulte": 1,
+          "enonce": "Dans la console Linux, quelle commande crée un dossier nommé `travail` dans le dossier courant ?",
+          "code": null,
+          "type_code": null,
+          "propositions": {
+            "A": "`pwd travail`",
+            "B": "`cd travail`",
+            "C": "`mkdir travail`",
+            "D": "`dir /home/martin/travail`"
+          },
+          "reponse": "C",
+          "explication": "`mkdir` (make directory) **crée** un nouveau répertoire.\n`mkdir travail` → crée `travail` dans le répertoire courant ✓\n\nPièges :\n• `pwd` : affiche le répertoire courant (Print Working Directory) — ne crée rien\n• `cd` : change de répertoire (Change Directory) — navigue, ne crée pas\n• `dir` : commande Windows (liste un répertoire) — pas disponible en Linux standard",
+          "notion_cle": "Commande mkdir — création de répertoire Linux",
+          "astuce": "mkdir = Make DIRectory. Les 4 commandes fondamentales : pwd (où?), ls (quoi?), cd (aller), mkdir (créer)."
+        },
+        {
+          "id": "E2",
+          "difficulte": 2,
+          "enonce": "Quelles sont les **quatre parties distinctes** de l'architecture de Von Neumann ?",
+          "code": null,
+          "type_code": null,
+          "propositions": {
+            "A": "L'unité logique, l'unité de contrôle, la mémoire et les dispositifs d'entrée-sortie",
+            "B": "L'écran, le clavier, le disque dur et le micro-processeur",
+            "C": "Le disque dur, le micro-processeur, la carte-mère et la carte graphique",
+            "D": "La mémoire des programmes, la mémoire des données, les E/S et l'unité logique"
+          },
+          "reponse": "A",
+          "explication": "L'**architecture de Von Neumann** (1945) comprend 4 composants :\n1. **Unité arithmétique et logique (UAL)** : calculs\n2. **Unité de contrôle** : gère l'exécution des instructions\n3. **Mémoire** : stocke programmes et données\n4. **Dispositifs d'entrée-sortie** : interaction avec l'extérieur\n\nPièges :\n• B : liste des périphériques physiques, pas l'architecture abstraite\n• C : composants matériels d'un PC moderne\n• D : Von Neumann utilise **une seule mémoire** pour programmes ET données (pas deux mémoires séparées)",
+          "notion_cle": "Architecture de Von Neumann — 4 composants",
+          "astuce": "Von Neumann = UAL + Unité de contrôle + Mémoire (unique, pour programmes ET données) + Entrées/Sorties. Clé : une seule mémoire partagée."
+        },
+        {
+          "id": "E3",
+          "difficulte": 1,
+          "enonce": "Depuis `/home/ubuntu/` on exécute `mkdir ./Documents/Holidays`. Quel est son effet ?",
+          "code": null,
+          "type_code": null,
+          "propositions": {
+            "A": "Supprimer le dossier `Holidays` dans `Documents`",
+            "B": "Changer de répertoire vers `/home/Documents/Holidays`",
+            "C": "Lister le contenu du répertoire `Holidays`",
+            "D": "Créer un dossier `Holidays` dans `/home/ubuntu/Documents`"
+          },
+          "reponse": "D",
+          "explication": "`mkdir ./Documents/Holidays` :\n- `mkdir` = créer un répertoire\n- `./` = répertoire courant = `/home/ubuntu/`\n- `Documents/Holidays` = dans le sous-dossier Documents, créer Holidays\n\n→ Crée **/home/ubuntu/Documents/Holidays** ✓\n\nPièges :\n• A : `mkdir` crée, ne supprime pas (ce serait `rmdir` ou `rm -r`)\n• B : changer de répertoire = `cd` (pas mkdir)\n• C : lister = `ls`",
+          "notion_cle": "Chemin relatif ./ et mkdir imbriqué",
+          "astuce": "./ = ici (répertoire courant). mkdir ./A/B crée B dans A. Documents doit déjà exister pour que cette commande réussisse."
+        },
+        {
+          "id": "E4",
+          "difficulte": 1,
+          "enonce": "Sur un ordinateur, où est stocké **de manière permanente** le système d'exploitation ?",
+          "code": null,
+          "type_code": null,
+          "propositions": {
+            "A": "Dans la mémoire RAM",
+            "B": "Sur le bus de données",
+            "C": "Sur le disque dur ou le disque SSD",
+            "D": "Dans le Cloud"
+          },
+          "reponse": "C",
+          "explication": "Le système d'exploitation (Windows, Linux, macOS) est stocké de manière **permanente** sur un **disque dur (HDD) ou SSD** — mémoire non volatile qui conserve les données sans alimentation.\n\nCycle de démarrage :\n1. BIOS/UEFI (ROM) démarre\n2. Charge l'OS depuis le **disque dur/SSD** en mémoire RAM\n3. L'OS s'exécute en **RAM** (temporairement)\n\nPièges :\n• A : la RAM est volatile → tout est perdu à l'extinction\n• B : le bus de données est un canal de communication, pas un stockage\n• D : le Cloud est distant et nécessite une connexion internet",
+          "notion_cle": "Stockage permanent vs temporaire — disque vs RAM",
+          "astuce": "Permanent = non volatile = disque dur/SSD. Temporaire = volatile = RAM. L'OS est installé sur le disque, chargé en RAM au démarrage."
+        },
+        {
+          "id": "E5",
+          "difficulte": 2,
+          "enonce": "Quelle commande permet de **changer les droits d'accès** d'un fichier ou répertoire sous Linux ?",
+          "code": null,
+          "type_code": null,
+          "propositions": {
+            "A": "`lsmod`",
+            "B": "`chmod`",
+            "C": "`chown`",
+            "D": "`pwd`"
+          },
+          "reponse": "B",
+          "explication": "`chmod` (change mode) modifie les **permissions d'accès** d'un fichier ou répertoire (lecture r, écriture w, exécution x).\n\nExemple : `chmod 755 script.py` → rwxr-xr-x\n\nPièges :\n• `lsmod` : liste les modules du noyau Linux (drivers)\n• `chown` : change le **propriétaire** d'un fichier (pas les permissions)\n• `pwd` : affiche le répertoire courant",
+          "notion_cle": "Commande chmod — droits d'accès Linux",
+          "astuce": "chmod = CHange MODe = changer les droits. chown = CHange OWNer = changer le propriétaire. Deux commandes différentes !"
+        },
+        {
+          "id": "E6",
+          "difficulte": 2,
+          "enonce": "L'adresse IP du site `www.education.gouv.fr` est 185.75.143.24. Quel dispositif permet d'associer cette adresse IP à l'URL ?",
+          "code": null,
+          "type_code": null,
+          "propositions": {
+            "A": "Un routeur",
+            "B": "Un serveur DNS",
+            "C": "Un serveur de temps",
+            "D": "Un serveur Web"
+          },
+          "reponse": "B",
+          "explication": "Le **DNS** (Domain Name System) est un service qui traduit les **noms de domaine** en **adresses IP** et vice versa.\n\nFonctionnement :\n1. Vous tapez `www.education.gouv.fr`\n2. Le navigateur interroge un **serveur DNS**\n3. Le DNS répond : adresse IP = 185.75.143.24\n4. Le navigateur peut then contacter le serveur web\n\nPièges :\n• Routeur : achemine les paquets entre réseaux — ne traduit pas les noms\n• Serveur de temps : synchronise les horloges (protocole NTP)\n• Serveur web : héberge les pages web — ne fait pas la résolution de noms",
+          "notion_cle": "Serveur DNS — résolution de noms de domaine",
+          "astuce": "DNS = annuaire internet. Nom de domaine → adresse IP. Sans DNS, il faudrait mémoriser les adresses IP de chaque site."
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "titre": "Langages et programmation",
+      "description": "Fonctions, portée des variables, if/elif, préconditions, tests.",
+      "questions": [
+        {
+          "id": "F1",
+          "difficulte": 3,
+          "enonce": "On définit :\n```python\ndef f(x,y):\n    x = x + y\n    y = x - y\n    x = x - y\n    return (x,y)\n```\nQuel est le résultat de `f(2019, 2020)` ?",
+          "code": "def f(x, y):\n    x = x + y\n    y = x - y\n    x = x - y\n    return (x, y)\n\nprint(f(2019, 2020))\n# Tracé : x=2019, y=2020\n# x = 2019+2020 = 4039\n# y = 4039-2020 = 2019\n# x = 4039-2019 = 2020",
+          "type_code": "python",
+          "propositions": {
+            "A": "(2019, 2019)",
+            "B": "(2019, 2020)",
+            "C": "(2020, 2019)",
+            "D": "(2020, 2020)"
+          },
+          "reponse": "C",
+          "explication": "Traçage avec x=2019, y=2020 :\n1. x = 2019+2020 = **4039**\n2. y = 4039−2020 = **2019**\n3. x = 4039−2019 = **2020**\n→ return **(2020, 2019)** ✓\n\nCette fonction réalise un **échange sans variable temporaire** par additions/soustractions !",
+          "notion_cle": "Traçage d'exécution — échange de variables",
+          "astuce": "Exécutez ligne par ligne en notant chaque valeur. Cette fonction échange x et y : x_final = y_initial, y_final = x_initial."
+        },
+        {
+          "id": "F2",
+          "difficulte": 3,
+          "enonce": "On exécute :\n```python\ndef f(t):\n    n = len(t)\n    tmp = t[0]\n    for i in range(1, n-1):\n        t[i] = t[i+1]\n    t[n-1] = tmp\nL = [1, 3, 4, 5, 2]\nf(L)\n```\nQuelle est la valeur de `L` ?",
+          "code": "def f(t):\n    n = len(t)\n    tmp = t[0]\n    for i in range(1, n-1):\n        t[i] = t[i+1]\n    t[n-1] = tmp\nL = [1, 3, 4, 5, 2]\nf(L)\nprint(L)",
+          "type_code": "python",
+          "propositions": {
+            "A": "[1, 3, 4, 5, 2]",
+            "B": "[2, 1, 3, 4, 5]",
+            "C": "[1, 4, 5, 2, 1]",
+            "D": "[2, 5, 4, 3, 1]"
+          },
+          "reponse": "C",
+          "explication": "Traçage avec L=[1,3,4,5,2], n=5 :\n1. `tmp = t[0]` = **1**\n2. Boucle `range(1, n-1)` = range(1, 4) = {1, 2, 3} :\n   - i=1 : t[1] = t[2] = **4**\n   - i=2 : t[2] = t[3] = **5**\n   - i=3 : t[3] = t[4] = **2**\n3. `t[n-1]` = t[4] = tmp = **1**\n→ L = **[1, 4, 5, 2, 1]** ✓\n\nNote : t[0] n'est jamais modifié (la boucle commence à i=1). C'est différent de B2 qui partait de i=0.",
+          "notion_cle": "Rotation partielle — range(1, n-1)",
+          "astuce": "range(1, n-1) ne touche pas t[0]. La boucle décale les éléments t[1] à t[n-2] vers la gauche. t[n-1] reçoit tmp=t[0] initial."
+        },
+        {
+          "id": "F3",
+          "difficulte": 2,
+          "enonce": "On exécute :\n```python\na = 10\nif a < 5:   a = 20\nelif a < 100: a = 500\nelif a < 1000: a = 1\nelse:          a = 0\n```\nQuelle est la valeur de `a` à la fin ?",
+          "code": "a = 10\nif a < 5:\n    a = 20\nelif a < 100:\n    a = 500\nelif a < 1000:\n    a = 1\nelse:\n    a = 0\nprint('a =', a)",
+          "type_code": "python",
+          "propositions": {
+            "A": "500",
+            "B": "10",
+            "C": "20",
+            "D": "1"
+          },
+          "reponse": "A",
+          "explication": "Traçage avec a=10 :\n1. `if a < 5` → 10 < 5 ? **Non**\n2. `elif a < 100` → 10 < 100 ? **Oui** → a = **500** et on **sort** du bloc\n\nLes `elif` et `else` suivants ne sont pas évalués.\n→ a = **500** ✓",
+          "notion_cle": "Structure if/elif/else — exclusivité des branches",
+          "astuce": "if/elif/else : dès qu'une condition est vraie, son bloc s'exécute et tout le reste est ignoré. a=10 satisfait elif a<100 → a=500, terminé."
+        },
+        {
+          "id": "F4",
+          "difficulte": 2,
+          "enonce": "On considère :\n```python\ndef puiss(y, x):\n    res = y\n    for i in range(x):\n        res = res * y\n    return res\n```\nQuelles sont les préconditions sur les arguments ?",
+          "code": "def puiss(y, x):\n    res = y\n    for i in range(x):\n        res = res * y\n    return res\n\n# Analyse : range(x) nécessite x entier\n# res commence à y puis est multiplié x fois par y\n# → res = y * y^x = y^(x+1) -- bug mais question sur préconditions\nprint('puiss(2,3)=', puiss(2,3))  # 16 = 2^4 (pas 2^3)\nprint('range(x) exige x entier')",
+          "type_code": "python",
+          "propositions": {
+            "A": "Les arguments doivent être obligatoirement de type entier",
+            "B": "Les arguments peuvent être de type entier ou flottant",
+            "C": "Le type des arguments n'a pas d'importance",
+            "D": "Il n'y a pas de préconditions dans ce cas"
+          },
+          "reponse": "A",
+          "explication": "`range(x)` exige que x soit un **entier** (int). Si x est un flottant (ex. x=2.5), Python lève une `TypeError: 'float' object cannot be interpreted as an integer`.\n\nDe plus, `range(x)` échoue si x est négatif (range s'arrête immédiatement sans erreur pour x<0, mais le résultat est y au lieu de y^x, ce qui est faux).\n\n→ Précondition : **x doit être un entier** (au moins, idéalement aussi x ≥ 0) ✓",
+          "notion_cle": "Préconditions — contraintes sur les arguments",
+          "astuce": "range(x) exige x entier. Si x est flottant → TypeError. La précondition principale est donc : x doit être de type int."
+        },
+        {
+          "id": "F5",
+          "difficulte": 2,
+          "enonce": "Quelle est la valeur de `x` à la fin de l'exécution ?\n```python\ndef f(x):\n    x = x + 1\n    return x + 1\nx = 0\nf(x+1)\n```",
+          "code": "def f(x):\n    x = x + 1\n    return x + 1\nx = 0\nresultat = f(x+1)\nprint('x =', x)         # variable globale\nprint('f retourne:', resultat)",
+          "type_code": "python",
+          "propositions": {
+            "A": "0",
+            "B": "1",
+            "C": "2",
+            "D": "3"
+          },
+          "reponse": "A",
+          "explication": "Exécution pas à pas :\n1. `x = 0` → x global = **0**\n2. `f(x+1)` = `f(0+1)` = `f(1)` → appelle f avec le paramètre local = 1\n3. Dans f : `x_local = 1+1 = 2`, `return 3` (valeur retournée ignorée)\n4. La variable **x globale n'est jamais modifiée** — le x dans f est un **paramètre local**\n\n→ x = **0** ✓\n\nConcept clé : le paramètre `x` de la fonction est une **copie locale** — modifier x dans f ne modifie pas x global (pour les types immuables comme int).",
+          "notion_cle": "Portée des variables — local vs global",
+          "astuce": "En Python, les paramètres de fonction et les variables locales ne modifient pas les variables globales de même nom (pour les int/str/float). x global reste 0."
+        },
+        {
+          "id": "F6",
+          "difficulte": 3,
+          "enonce": "La fonction suivante ne calcule pas toujours correctement x^y. Quel test permet de détecter l'erreur ?\n```python\ndef puissance(x, y):\n    p = x\n    for i in range(y-1):\n        p = p * x\n    return p\n```",
+          "code": "def puissance(x, y):\n    p = x\n    for i in range(y-1):\n        p = p * x\n    return p\n\nfor args in [(2,0),(2,1),(2,2),(2,10)]:\n    attendu = args[0]**args[1]\n    obtenu = puissance(*args)\n    status = '✓' if obtenu==attendu else f'✗ ERREUR (attendu {attendu}, obtenu {obtenu})'\n    print(f'puissance{args} = {obtenu} {status}')",
+          "type_code": "python",
+          "propositions": {
+            "A": "`puissance(2, 0)`",
+            "B": "`puissance(2, 1)`",
+            "C": "`puissance(2, 2)`",
+            "D": "`puissance(2, 10)`"
+          },
+          "reponse": "A",
+          "explication": "Analyse de `puissance(x, y)` : `p = x`, puis multiplication par x encore `y-1` fois → p = x^y ✓ pour y ≥ 1.\n\nMais pour **y = 0** : `range(y-1)` = `range(-1)` → boucle vide, `return p = x`.\nOr x^0 = **1**, pas x !\n\n• `puissance(2, 0)` → retourne 2 au lieu de **1** ✗ **erreur détectée** ✓\n• Les autres tests (y≥1) donnent des résultats corrects\n\nC'est un cas limite classique : une puissance nulle.",
+          "notion_cle": "Test de cas limite — puissance nulle (x^0=1)",
+          "astuce": "x^0 = 1 pour tout x. La fonction renvoie x au lieu de 1 pour y=0. Toujours tester les cas limites : 0, 1, valeurs négatives."
+        }
+      ]
+    },
+    {
+      "id": "G",
+      "titre": "Algorithmique",
+      "description": "Boucle while, indice du max, complexité, tri sélection, algorithme glouton.",
+      "questions": [
+        {
+          "id": "G1",
+          "difficulte": 2,
+          "enonce": "On exécute ce script sur `liste = [17,12,5,18,2,7,9,15,14,20]`. Quelle affirmation est **fausse** ?",
+          "code": "liste = [17,12,5,18,2,7,9,15,14,20]\nsomme = 0\ni = 0\nwhile i < len(liste):\n    somme = somme + liste[i]\n    i = i + 1\nresultat = somme / len(liste)\nprint('i final =', i)\nprint('somme =', somme)\nprint('resultat =', resultat)",
+          "type_code": "python",
+          "propositions": {
+            "A": "Le corps de la boucle a été exécuté 10 fois",
+            "B": "À la fin de l'exécution la valeur de i est 9",
+            "C": "`resultat` contient la moyenne des éléments de `liste`",
+            "D": "`len` est une fonction"
+          },
+          "reponse": "B",
+          "explication": "**B est fausse** : à la fin, `i = 10` (pas 9).\n\nLa boucle continue tant que `i < 10`. Elle s'arrête quand i=10 (condition 10<10 fausse). Donc i vaut **10** à la sortie.\n\nLes vraies :\n• A ✓ : boucle pour i=0,1,...,9 → 10 exécutions\n• C ✓ : somme/len = moyenne\n• D ✓ : `len` est une fonction Python intégrée",
+          "notion_cle": "Valeur finale du compteur after while",
+          "astuce": "Après while i < n: ... i += 1, la valeur finale de i est n (pas n-1). La boucle s'arrête car i=n rend la condition fausse."
+        },
+        {
+          "id": "G2",
+          "difficulte": 2,
+          "enonce": "Que fait la fonction suivante ?\n```python\ndef trouver(L):\n    i = 0\n    for j in range(1, len(L)):\n        if L[j] >= L[i]:\n            i = j\n    return i\n```",
+          "code": "def trouver(L):\n    i = 0\n    for j in range(1, len(L)):\n        if L[j] >= L[i]:\n            i = j\n    return i\n\n# Tests\nprint(trouver([3,1,5,5,2]))  # 5 en positions 2 et 3\nprint(trouver([1,2,3]))       # max en dernière position\nprint(trouver([3,2,1]))       # max en première position",
+          "type_code": "python",
+          "propositions": {
+            "A": "Elle renvoie le maximum de la liste",
+            "B": "Elle renvoie le minimum de la liste",
+            "C": "Elle renvoie l'indice de la première occurrence du maximum",
+            "D": "Elle renvoie l'indice de la dernière occurrence du maximum"
+          },
+          "reponse": "D",
+          "explication": "La condition `L[j] >= L[i]` (avec **`>=`**, supérieur **ou égal**) met à jour i à chaque fois qu'on trouve une valeur supérieure **ou égale** à l'actuel maximum.\n\nDonc si le maximum apparaît plusieurs fois, i pointe toujours vers la **dernière** occurrence.\n\nExemple : `[3,1,5,5,2]` → i=2 quand on voit 5 en position 2, puis i=3 quand on revoit 5 en position 3 (5>=5). Retourne **3** (dernière occurrence) ✓\n\nAvec `>` (strict), la réponse serait C (première occurrence).",
+          "notion_cle": "Recherche du max — >= donne la dernière occurrence",
+          "astuce": "> strict → première occurrence du max. >= → dernière occurrence. Testez avec [5,5,5] : > donne i=0, >= donne i=2 (dernier)."
+        },
+        {
+          "id": "G3",
+          "difficulte": 2,
+          "enonce": "On calcule la moyenne de L (n nombres réels) avec :\n```python\nM = 0\nfor k in range(n):\n    M = M + L[k]\nM = M/n\n```\nSi n **double**, le temps d'exécution :",
+          "code": "import time\n\ndef moyenne(L):\n    n = len(L)\n    M = 0\n    for k in range(n):\n        M = M + L[k]\n    return M/n\n\nfor n in [1000, 2000, 4000]:\n    L = list(range(n))\n    t = time.time()\n    for _ in range(1000): moyenne(L)\n    print(f'n={n}: {(time.time()-t)*1000:.1f}ms')",
+          "type_code": "python",
+          "propositions": {
+            "A": "Reste le même",
+            "B": "Double aussi",
+            "C": "Est multiplié par n",
+            "D": "Est multiplié par 4"
+          },
+          "reponse": "B",
+          "explication": "L'algorithme parcourt **exactement n fois** la boucle pour calculer la somme. Le temps d'exécution est **proportionnel à n** → c'est un algorithme **O(n)** (linéaire).\n\nSi n double : le nombre d'opérations double → le temps **double** aussi ✓\n\nPièges :\n• A : serait le cas d'un algorithme O(1) constant\n• C : serait O(n²) si le temps était n×temps_initial\n• D : serait O(n²) avec n doublé → 4× le temps",
+          "notion_cle": "Complexité linéaire O(n) — temps proportionnel à n",
+          "astuce": "Une boucle simple sur n éléments = O(n). Si n double, le temps double. O(n²) : si n double, le temps quadruple."
+        },
+        {
+          "id": "G4",
+          "difficulte": 2,
+          "enonce": "Quelle est la complexité du **tri par sélection** ?",
+          "code": "import time\n\ndef tri_selection(t):\n    for i in range(len(t)):\n        min_idx = i\n        for j in range(i+1, len(t)):\n            if t[j] < t[min_idx]: min_idx = j\n        t[i], t[min_idx] = t[min_idx], t[i]\n\nfor n in [100, 200, 400]:\n    import random\n    L = [random.randint(0,1000) for _ in range(n)]\n    t = time.time()\n    tri_selection(L[:])\n    print(f'n={n}: {(time.time()-t)*1000:.2f}ms')",
+          "type_code": "python",
+          "propositions": {
+            "A": "Inconnue",
+            "B": "Linéaire",
+            "C": "Quadratique",
+            "D": "Exponentielle"
+          },
+          "reponse": "C",
+          "explication": "Le tri par sélection utilise **deux boucles imbriquées** sur n éléments :\n- Boucle externe : i de 0 à n-1\n- Boucle interne : j de i+1 à n-1\n\nNombre de comparaisons = (n-1) + (n-2) + ... + 1 = n(n-1)/2 ≈ **n²/2** → **O(n²) = quadratique**\n\nSi n double : temps × 4. C'est la complexité de tous les tris simples (sélection, insertion, bulles) dans le pire cas.",
+          "notion_cle": "Complexité O(n²) — tri par sélection",
+          "astuce": "Deux boucles imbriquées chacune sur n → O(n²). Les tris simples (sélection, insertion, bulles) sont tous O(n²) dans le pire cas."
+        },
+        {
+          "id": "G5",
+          "difficulte": 1,
+          "enonce": "Quelle est la valeur de `element` à la fin ?\n```python\nL = [1,2,3,4,1,2,3,4,0,2]\nelement = L[0]\nfor k in L:\n    if k > element:\n        element = k\n```",
+          "code": "L = [1,2,3,4,1,2,3,4,0,2]\nelement = L[0]\nfor k in L:\n    if k > element:\n        element = k\nprint('element =', element)\nprint('max(L) =', max(L))",
+          "type_code": "python",
+          "propositions": {
+            "A": "4",
+            "B": "1",
+            "C": "0",
+            "D": "10"
+          },
+          "reponse": "A",
+          "explication": "L'algorithme recherche le **maximum** de la liste :\n- Démarre à L[0] = 1\n- Parcourt tous les éléments\n- Met à jour si un élément est strictement supérieur\n\nMax de [1,2,3,4,1,2,3,4,0,2] = **4** ✓\n\nPièges :\n• B (1) est le premier élément\n• C (0) est la valeur minimale\n• D (10) n'est pas dans la liste",
+          "notion_cle": "Algorithme de recherche du maximum",
+          "astuce": "Pattern : element = L[0] puis for k in L: if k > element: element = k → trouve le maximum de la liste."
+        },
+        {
+          "id": "G6",
+          "difficulte": 1,
+          "enonce": "On exécute :\n```python\ntab = [1, 4, 3, 8, 2]\nS = 0\nfor i in range(len(tab)):\n    S = S + tab[i]\n```\nQue vaut `S` à la fin ?",
+          "code": "tab = [1, 4, 3, 8, 2]\nS = 0\nfor i in range(len(tab)):\n    S = S + tab[i]\nprint('S =', S)\nprint('Vérification :', sum(tab))",
+          "type_code": "python",
+          "propositions": {
+            "A": "1",
+            "B": "8",
+            "C": "18",
+            "D": "3.6"
+          },
+          "reponse": "C",
+          "explication": "La boucle additionne tous les éléments :\nS = 0+1+4+3+8+2 = **18** ✓\n\nPièges :\n• A (1) = premier élément seulement\n• B (8) = maximum de la liste\n• D (3.6) = moyenne (18/5) — mais S n'est pas divisé ici",
+          "notion_cle": "Somme des éléments d'une liste",
+          "astuce": "Le pattern S = 0 puis S = S + tab[i] calcule la somme. 1+4+3+8+2 = 18. D serait la moyenne si on divisait par len(tab)=5."
+        }
+      ]
+    }
+  ]
+}
